@@ -22,6 +22,7 @@ app.get('/', (req, res, next) => {
 	setImmediate(() => {
 		next(new Error('it is an error'));
 	});
+
 	
 });
 
@@ -30,9 +31,11 @@ app.post('/', (req, res) => {
 	res.json(req.body);
 });
 
+app.use('/users',require('./routes/users'));
+
 //에러처리기
 app.use((error, req, res, next) => {
-	res.status(err.status || 500);
+	res.status(error.status || 500);
 	res.send(error.message || '서버에서 에러 발생');
 });
 app.use(express.static(path.join(__dirname, '../uploads')));
